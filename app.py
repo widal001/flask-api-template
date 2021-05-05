@@ -1,6 +1,6 @@
 from flask import Flask, send_from_directory
 from api import api_bp
-from flask_cors import CORS
+# from flask_cors import CORS
 import os
 from flask_swagger_ui import get_swaggerui_blueprint
 
@@ -19,7 +19,7 @@ def create_app(env=None):
     load_from_env(app)
 
     # Enables Cross Origin Resource Sharing
-    CORS(app, supports_credentials=True)
+    # CORS(app, supports_credentials=True)
 
     # Initialization for flask-restful
     app.register_blueprint(api_bp, url_prefix='/api')
