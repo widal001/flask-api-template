@@ -9,4 +9,3 @@ swagger_blueprint = get_swaggerui_blueprint(
     API_URL,
     config={'app_name': "YOUR_APP_NAME"} # replace this
 )
-swagger_blueprint.static_url_path = '/swagger/static'

@@ -1,11 +1,8 @@
-from flask import url_for
-
 from app import create_app
 
 
 def init_app():
     app = create_app()
-    from flask import url_for
     return app
 
 if __name__ == "__main__":
