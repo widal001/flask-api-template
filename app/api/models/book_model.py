@@ -1,4 +1,4 @@
-from app.models import db
+from app.api.models import db
 
 
 class Book(db.Model):
@@ -6,9 +6,8 @@ class Book(db.Model):
 
     #table columns
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String)
     title = db.Column(db.String, nullable=False)
-    length = db.Column(db.String)
+    author = db.Column(db.String, nullable=False)
 
     #relationships
     libraries = db.relationship(

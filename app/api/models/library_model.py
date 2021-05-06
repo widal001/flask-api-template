@@ -1,4 +1,4 @@
-from app.models import db
+from app.api.models import db
 
 
 class Library(db.Model):
@@ -10,7 +10,7 @@ class Library(db.Model):
 
     #relationships
     books = db.relationship(
-        "LibraryItem",
-        back_populates="libraries",
+        "LibraryBook",
+        back_populates="library",
         cascade="all, delete, delete-orphan"
     )

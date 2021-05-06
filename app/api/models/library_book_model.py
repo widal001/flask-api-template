@@ -1,4 +1,4 @@
-from app.models import db
+from app.api.models import db
 
 
 class LibraryBook(db.Model):
@@ -7,9 +7,9 @@ class LibraryBook(db.Model):
     #table columns
     id = db.Column(db.Integer, primary_key=True)
     book_id = db.Column(db.Integer, db.ForeignKey("book.id"), nullable=False)
-    library_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    is_available = db.Column(db.Integer)
+    library_id = db.Column(db.Integer, db.ForeignKey("library.id"), nullable=False)
+    is_available = db.Column(db.Boolean)
 
     #relationships
-    book = db.relationship("Book", back_populates="readers")
-    library = db.relationship("library", back_populates="books")
+    book = db.relationship("Book", back_populates="libraries")
+    library = db.relationship("Library", back_populates="books")
