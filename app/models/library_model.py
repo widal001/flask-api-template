@@ -1,4 +1,4 @@
-from app.api.models import db
+from app.models import db
 
 
 class Library(db.Model):

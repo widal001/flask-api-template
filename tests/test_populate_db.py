@@ -1,4 +1,4 @@
-from app.api.models import db, Book, Library
+from app.models import db, Book, Library
 from tests.data import BOOKS, LIBRARIES
 
 

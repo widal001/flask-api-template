@@ -3,7 +3,7 @@ import os
 import pytest
 
 from run import create_app
-from app.api.models import db
+from app.models import db
 from tests.populate_db import populate
 
 @pytest.fixture(scope='session')
