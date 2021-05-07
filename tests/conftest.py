@@ -17,4 +17,4 @@ def client(request):
             db.drop_all()
             db.create_all()  # Create sql tables for our data models
             populate()
-            yield app
+            yield client
