@@ -34,8 +34,11 @@ class LibraryCollection(Resource):
 
 class LibraryBookCollection(Resource):
 
-    def get(self, lib_id, book_id):
-        pass
+    def get(self, lib_id):
+        schema = LibrarySchema()
+        library = Library.query.get(lib_id)
+        result = schema.dump(library)
+        return {"status": "success", "data": result}, 200
 
     def post(self, lib_id, book_id):
         pass

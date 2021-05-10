@@ -20,3 +20,4 @@ api.add_resource(BookItem, "/books/<int:book_id>")
 
 # library endpoints
 api.add_resource(LibraryCollection, "/libraries")
+api.add_resource(LibraryBookCollection, "/libraries/<int:lib_id>/books")

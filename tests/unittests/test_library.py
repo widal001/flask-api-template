@@ -2,7 +2,7 @@ import json
 from pprint import pprint
 
 from app.models import db, Library
-from tests.data import LIBRARIES
+from tests.data import LIBRARIES, LIBRARY_BOOKS_API
 
 
 class TestLibraryCollection:
@@ -52,7 +52,23 @@ class TestLibraryCollection:
 class TestLibraryBookCollection:
 
     def test_get(self, client):
-        assert 1
+        # setup
+        expected = LIBRARY_BOOKS_API["central"]
+
+        # execution
+        response = client.get("/api/libraries/123/books")
+        print("RESPONSE")
+        print(response.status_code)
+
+        data = response.json["data"]
+        print("EXPECTED")
+        pprint(expected)
+        print("ACTUAL")
+        pprint(data)
+
+        # validation
+        assert response.status_code == 200
+        assert data == expected
 
     def test_post(self, client):
         assert 1
