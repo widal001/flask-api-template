@@ -35,7 +35,31 @@ class BookCollection(Resource):
 class BookItem(Resource):
 
     def get(self, book_id):
-        pass
+        schema = BookSchema()
+        book = Book.query.get(book_id)
+        if not book:
+            return {'message': 'Book does not exist'}, 404
+        result = schema.dump(book)
+        return {'status': 'success', 'data': result}, 200
 
     def put(self, book_id):
-        pass
+        schema = BookSchema()
+
+        # locate the record to update
+        book = Book.query.get(book_id)
+        if not book:
+            return {'message': 'Book does not exist'}, 404
+
+        # parse the payload
+        try:
+            json_data = request.get_json(force=True)
+            data = schema.load(json_data)
+        except ValidationError as e:
+            return e.messages, 422
+
+        # update the record
+        book.update(**data)
+        db.session.commit()
+
+        result = schema.dump(book)
+        return {'status': 'success', 'data': result}, 200

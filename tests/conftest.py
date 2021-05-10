@@ -6,10 +6,10 @@ from run import create_app
 from app.models import db
 from tests.populate_db import populate
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="function")
 def client(request):
     app = create_app()
-    app.config['DEBUG'] = True
+    app.config["DEBUG"] = True
 
     # create test client and database
     with app.test_client() as client:

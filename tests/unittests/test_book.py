@@ -53,7 +53,44 @@ class TestBookCollection:
 class TestBookItem:
 
     def test_get(self, client):
-        assert 1
+        # setup
+        expected = BOOKS["world and me"]
+
+        # execution
+        response = client.get("/api/books/123")
+        print("RESPONSE")
+        print(response.status_code)
+
+        data = response.json["data"]
+        print("EXPECTED")
+        pprint(expected)
+        print("ACTUAL")
+        pprint(data)
+
+        # validation
+        assert response.status_code == 200
+        assert data == expected
 
     def test_put(self, client):
-        assert 1
+        # setup
+        new_val = "Between the World and Me (Revised)"
+        expected = BOOKS["world and me"].copy()
+        expected["title"] = new_val
+
+        # execution
+        response = client.put("/api/books/123", data=json.dumps(expected))
+        print("RESPONSE")
+        print(response.status_code)
+
+        data = response.json["data"]
+        print("EXPECTED")
+        pprint(expected)
+        print("ACTUAL")
+        pprint(data)
+
+        book = Book.query.get(123)
+
+        # validation
+        assert response.status_code == 200
+        assert data == expected
+        assert book.title == new_val
