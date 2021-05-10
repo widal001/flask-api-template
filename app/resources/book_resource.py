@@ -16,9 +16,9 @@ class BookCollection(Resource):
     def post(self):
         schema = BookSchema()
 
-        # load the data
-        json_data = request.get_json(force=True)
+        # parse the payload data
         try:
+            json_data = request.get_json(force=True)
             data = schema.load(json_data)
         except ValidationError as e:
             return e.messages, 422
