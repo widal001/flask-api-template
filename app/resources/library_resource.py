@@ -76,8 +76,25 @@ class LibraryBookItem(Resource):
 
 class LibraryBookBorrow(Resource):
 
-    def put(self, lib_id, book_id):
-        pass
+    def post(self, lib_id, book_id):
+        schema = LibraryBookSchema()
+
+        # locate the library book
+        q = LibraryBook.query.filter_by(library_id=lib_id,book_id=book_id)
+        lib_book = q.first()
+
+        # check that it exists and is still avaialable
+        if not lib_book:
+            return {"message": "That library book does not exist"}, 404
+        elif not lib_book.is_available:
+            return {"message": "That book has already been borrowed"}, 400
+
+        # set book to unavailable
+        lib_book.is_available = False
+        db.session.commit()
+
+        result = schema.dump(lib_book)
+        return {"message": "success", "data": result}, 200
 
 
 class LibraryBookReturn(Resource):

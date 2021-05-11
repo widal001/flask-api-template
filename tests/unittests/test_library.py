@@ -2,7 +2,7 @@ import json
 from copy import deepcopy
 from pprint import pprint
 
-from app.models import db, Library
+from app.models import db, Library, LibraryBook
 from tests.data import LIBRARIES, LIBRARY_BOOKS_API, BOOKS
 
 
@@ -101,13 +101,41 @@ class TestLibraryBookItem:
         lib = Library.query.get(124)
         assert len(lib.books) == 4
 
+
 class TestLibraryBookBorrow:
 
     def test_put(self, client):
-        assert 1
+        # setup
+        lib_book = LibraryBook.query.get(111)
+        assert lib_book.is_available is True
+
+        # execution
+        response = client.post("/api/libraries/123/books/123/borrow")
+        print("RESPONSE")
+        print(response.status_code)
+        print(response.json)
+
+        # validation
+        assert response.status_code == 200
+        lib_book = LibraryBook.query.get(111)
+        assert lib_book.is_available is False
 
     def test_already_checked_out(self, client):
-        assert 1
+        # setup
+        expected = "That book has already been borrowed"
+        lib_book = LibraryBook.query.get(112)
+        assert lib_book.is_available is False
+
+        # execution
+        response = client.post("/api/libraries/123/books/124/borrow")
+        print("RESPONSE")
+        print(response.status_code)
+        print(response.json)
+        data = response.json["message"]
+
+        # validation
+        assert response.status_code == 400
+        assert data == expected
 
 class TestLibraryBookReturn:
 
