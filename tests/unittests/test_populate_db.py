@@ -1,4 +1,4 @@
-from app.api.models import db, Book, Library
+from app.models import db, Book, Library
 from tests.data import BOOKS, LIBRARIES
 
 
@@ -7,6 +7,8 @@ def test_populate(client):
     # setup
     exp_book = BOOKS["world and me"]
     exp_library = LIBRARIES["central"]
+    print("EXPECTED")
+    print(exp_book)
 
     # execution
     book = Book.query.get(123)

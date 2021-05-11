@@ -28,6 +28,6 @@ def register_blueprints(server):
 
 
 def register_database(server):
-    from app.api.models import db
+    from app.models import db
 
     db.init_app(server)

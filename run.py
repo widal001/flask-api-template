@@ -1,5 +1,5 @@
 from app import create_app
-from app.api.models import db
+from app.models import db
 from tests.populate_db import populate
 
 

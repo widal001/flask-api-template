@@ -1,4 +1,4 @@
-from app.api.models import db, Library, Book, LibraryBook
+from app.models import db, Library, Book, LibraryBook
 from tests.data import BOOKS, LIBRARIES, LIBRARY_BOOKS
 
 def populate():
