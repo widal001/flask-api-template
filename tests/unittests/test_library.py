@@ -140,7 +140,34 @@ class TestLibraryBookBorrow:
 class TestLibraryBookReturn:
 
     def test_put(self, client):
-        assert 1
+        # setup
+        lib_book = LibraryBook.query.get(112)
+        assert lib_book.is_available is False
+
+        # execution
+        response = client.post("/api/libraries/123/books/124/return")
+        print("RESPONSE")
+        print(response.status_code)
+        print(response.json)
+
+        # validation
+        assert response.status_code == 200
+        lib_book = LibraryBook.query.get(112)
+        assert lib_book.is_available is True
 
     def test_already_returned(self, client):
-        assert 1
+        # setup
+        expected = "That book has already been returned"
+        lib_book = LibraryBook.query.get(111)
+        assert lib_book.is_available is True
+
+        # execution
+        response = client.post("/api/libraries/123/books/123/return")
+        print("RESPONSE")
+        print(response.status_code)
+        print(response.json)
+        data = response.json["message"]
+
+        # validation
+        assert response.status_code == 400
+        assert data == expected
