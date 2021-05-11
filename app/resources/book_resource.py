@@ -38,9 +38,9 @@ class BookItem(Resource):
         schema = BookSchema()
         book = Book.query.get(book_id)
         if not book:
-            return {'message': 'Book does not exist'}, 404
+            return {"message": "That book does not exist"}, 404
         result = schema.dump(book)
-        return {'status': 'success', 'data': result}, 200
+        return {"status": "success", "data": result}, 200
 
     def put(self, book_id):
         schema = BookSchema()
@@ -48,7 +48,7 @@ class BookItem(Resource):
         # locate the record to update
         book = Book.query.get(book_id)
         if not book:
-            return {'message': 'Book does not exist'}, 404
+            return {"message": "That book does not exist"}, 404
 
         # parse the payload
         try:
@@ -62,4 +62,4 @@ class BookItem(Resource):
         db.session.commit()
 
         result = schema.dump(book)
-        return {'status': 'success', 'data': result}, 200
+        return {"status": "success", "data": result}, 200

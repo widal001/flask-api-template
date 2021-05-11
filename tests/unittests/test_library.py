@@ -1,8 +1,9 @@
 import json
+from copy import deepcopy
 from pprint import pprint
 
 from app.models import db, Library
-from tests.data import LIBRARIES, LIBRARY_BOOKS_API
+from tests.data import LIBRARIES, LIBRARY_BOOKS_API, BOOKS
 
 
 class TestLibraryCollection:
@@ -70,8 +71,35 @@ class TestLibraryBookCollection:
         assert response.status_code == 200
         assert data == expected
 
-    def test_post(self, client):
-        assert 1
+
+class TestLibraryBookItem:
+
+    def test_put(self, client):
+        # setup
+        new_val = {"id": 1, "is_available": True, "book": BOOKS["beloved"]}
+        expected = {**new_val, "library": LIBRARIES["waverly"]}
+        lib = Library.query.get(124)
+        assert len(lib.books) == 3
+
+        # execution
+        response = client.put(
+            "/api/libraries/124/books/126",
+            data=json.dumps(new_val),
+        )
+        print("RESPONSE")
+        print(response.status_code)
+
+        data = response.json["data"]
+        print("EXPECTED")
+        pprint(expected)
+        print("ACTUAL")
+        pprint(data)
+
+        # validation
+        assert response.status_code == 201
+        assert data == expected
+        lib = Library.query.get(124)
+        assert len(lib.books) == 4
 
 class TestLibraryBookBorrow:
 
