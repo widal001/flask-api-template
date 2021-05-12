@@ -1,6 +1,7 @@
 from app.models import db, Library, Book, LibraryBook
 from tests.data import BOOKS, LIBRARIES, LIBRARY_BOOKS
 
+
 def populate():
 
     # create the library and book records

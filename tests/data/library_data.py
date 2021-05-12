@@ -10,5 +10,5 @@ LIBRARIES = {
     "patterson": {
         "id": 125,
         "name": "Enoch Pratt - Patterson Park Branch",
-    }
+    },
 }

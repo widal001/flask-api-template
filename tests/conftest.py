@@ -6,6 +6,7 @@ from run import create_app
 from app.models import db
 from tests.populate_db import populate
 
+
 @pytest.fixture(scope="function")
 def client(request):
     app = create_app()

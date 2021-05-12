@@ -13,6 +13,7 @@ def create_local_app():
 
     return app
 
+
 if __name__ == "__main__":
     app = create_local_app()
     # allows us to access the app from within a docker container

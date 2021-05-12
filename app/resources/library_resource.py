@@ -6,7 +6,6 @@ from app.schemas import LibrarySchema, LibraryBookSchema
 
 
 class LibraryCollection(Resource):
-
     def get(self):
         schema = LibrarySchema(many=True, exclude=["books"])
         libraries = Library.query.all()
@@ -33,7 +32,6 @@ class LibraryCollection(Resource):
 
 
 class LibraryBookCollection(Resource):
-
     def get(self, lib_id):
         schema = LibrarySchema()
         library = Library.query.get(lib_id)
@@ -42,8 +40,8 @@ class LibraryBookCollection(Resource):
         result = schema.dump(library)
         return {"status": "success", "data": result}, 200
 
-class LibraryBookItem(Resource):
 
+class LibraryBookItem(Resource):
     def put(self, lib_id, book_id):
         schema = LibraryBookSchema()
 
@@ -75,12 +73,11 @@ class LibraryBookItem(Resource):
 
 
 class LibraryBookBorrow(Resource):
-
     def post(self, lib_id, book_id):
         schema = LibraryBookSchema()
 
         # locate the library book
-        q = LibraryBook.query.filter_by(library_id=lib_id,book_id=book_id)
+        q = LibraryBook.query.filter_by(library_id=lib_id, book_id=book_id)
         lib_book = q.first()
 
         # check that it exists and is still avaialable
@@ -98,12 +95,11 @@ class LibraryBookBorrow(Resource):
 
 
 class LibraryBookReturn(Resource):
-
     def post(self, lib_id, book_id):
         schema = LibraryBookSchema()
 
         # locate the library book
-        q = LibraryBook.query.filter_by(library_id=lib_id,book_id=book_id)
+        q = LibraryBook.query.filter_by(library_id=lib_id, book_id=book_id)
         lib_book = q.first()
 
         # check that it exists and is still avaialable

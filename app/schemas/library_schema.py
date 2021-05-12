@@ -10,12 +10,13 @@ class LibraryBookSchema(Schema):
     # for info on why we use lambda here review this documentation:
     # https://marshmallow.readthedocs.io/en/stable/nesting.html#two-way-nesting
     library = fields.Nested(
-        lambda: LibrarySchema(exclude=('books',)),
+        lambda: LibrarySchema(exclude=("books",)),
         dump_only=True,
     )
 
     class Meta:
         unknown = EXCLUDE
+
 
 class LibrarySchema(Schema):
     id = fields.Integer(dump_only=True)

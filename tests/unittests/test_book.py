@@ -6,7 +6,6 @@ from tests.data import BOOKS
 
 
 class TestBookCollection:
-
     def test_get(self, client):
         # setup
         expected = list(BOOKS.values())
@@ -51,7 +50,6 @@ class TestBookCollection:
 
 
 class TestBookItem:
-
     def test_get(self, client):
         # setup
         expected = BOOKS["world and me"]

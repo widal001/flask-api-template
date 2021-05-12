@@ -6,7 +6,6 @@ from app.schemas import BookSchema
 
 
 class BookCollection(Resource):
-
     def get(self):
         schema = BookSchema(many=True)
         books = Book.query.all()
@@ -33,7 +32,6 @@ class BookCollection(Resource):
 
 
 class BookItem(Resource):
-
     def get(self, book_id):
         schema = BookSchema()
         book = Book.query.get(book_id)

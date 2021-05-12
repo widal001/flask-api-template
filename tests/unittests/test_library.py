@@ -7,7 +7,6 @@ from tests.data import LIBRARIES, LIBRARY_BOOKS_API, BOOKS
 
 
 class TestLibraryCollection:
-
     def test_get(self, client):
         # setup
         expected = list(LIBRARIES.values())
@@ -50,8 +49,8 @@ class TestLibraryCollection:
         assert data == expected
         assert 1
 
-class TestLibraryBookCollection:
 
+class TestLibraryBookCollection:
     def test_get(self, client):
         # setup
         expected = LIBRARY_BOOKS_API["central"]
@@ -73,7 +72,6 @@ class TestLibraryBookCollection:
 
 
 class TestLibraryBookItem:
-
     def test_put(self, client):
         # setup
         new_val = {"id": 1, "is_available": True, "book": BOOKS["beloved"]}
@@ -103,7 +101,6 @@ class TestLibraryBookItem:
 
 
 class TestLibraryBookBorrow:
-
     def test_put(self, client):
         # setup
         lib_book = LibraryBook.query.get(111)
@@ -137,8 +134,8 @@ class TestLibraryBookBorrow:
         assert response.status_code == 400
         assert data == expected
 
-class TestLibraryBookReturn:
 
+class TestLibraryBookReturn:
     def test_put(self, client):
         # setup
         lib_book = LibraryBook.query.get(112)

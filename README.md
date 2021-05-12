@@ -59,7 +59,7 @@ If you don't have docker or docker-compose installed on your local machine, foll
 1. Clone the forked repo on your local machine`git clone https://github.com/YOUR_USERNAME/flask-api-template`
 1. Run `docker-compose up -d` from the command line to build and run docker containers for the app. Something similar to the following should be printed to the console:
    ```
-   $ docker-compose up -d          
+   $ docker-compose up -d
    > Creating network "flask-api-template_default" with the default driver
    > Creating volume "flask-test-db" with default driver
    > Creating volume "flask-app-db" with default driver

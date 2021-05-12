@@ -18,5 +18,5 @@ BOOKS = {
         "id": 126,
         "title": "Beloved",
         "author": "Toni Morrison",
-    }
+    },
 }

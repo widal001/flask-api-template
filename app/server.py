@@ -17,9 +17,11 @@ def create_app(test_config=None):
 
     return app
 
+
 def register_blueprints(server):
     from app import api
     from app import swagger
+
     # from app import webapp
 
     server.register_blueprint(api.api_bp)
