@@ -10,11 +10,11 @@ class LibraryCollection(Resource):
         """Retrieves a collection of library resources.
 
         Endpoint
-        ----------
+        --------
         GET api/libraries
 
-        Status Codes
-        ----------
+        Responses
+        ---------
         200 : Success
             {
                 "status": "success",
@@ -34,15 +34,15 @@ class LibraryCollection(Resource):
         defined URI.
 
         Endpoint
-        ----------
+        --------
         POST api/libraries
 
         Payload
-        ----------
+        -------
         {"name": str, required -> "Enoch Pratt Central Branch"}
 
-        Status Codes
-        ----------
+        Responses
+        ---------
         422 : Validation Error
             {"message": "Schema validation error"}
         201 : Created
@@ -80,13 +80,13 @@ class LibraryBookCollection(Resource):
         ----------
         GET api/libraries/<lib_id>/books
 
-        Path Parameters
+        Parameters
         ----------
         lib_id : int, required
             The id for the library resource
 
-        Status Codes
-        ----------
+        Responses
+        ---------
         404 : Library not found
             {"message": "That library does not exist"}
         200 : Success
@@ -120,10 +120,10 @@ class LibraryBookItem(Resource):
         """Replaces or creates a library book resource at a client defined URI.
 
         Endpoint
-        ----------
+        --------
         PUT api/libraries/<lib_id>/books/<book_id>
 
-        Path Parameters
+        Parameters
         ----------
         lib_id : int, required
             The id for the parent library resource
@@ -131,11 +131,11 @@ class LibraryBookItem(Resource):
             The id for the parent book resource
 
         Payload
-        ----------
+        -------
         {"is_available": bool -> true}
 
-        Status Codes
-        ----------
+        Responses
+        ---------
         404 : Library not found
             {"message": "That library does not exist"}
         404 : Book not found
@@ -192,18 +192,18 @@ class LibraryBookBorrow(Resource):
         """Checks out a library book resource, changing is_availabe to false.
 
         Endpoint
-        ----------
+        --------
         POST api/libraries/<lib_id>/books/<book_id>/borrow
 
-        Path Parameters
+        Parameters
         ----------
         lib_id : int, required
             The id for the parent library resource
         book_id : int, required
             The id for the parent book resource
 
-        Status Codes
-        ----------
+        Responses
+        ---------
         404 : Library book not found
             {"message": "That library book does not exist"}
         400 : Already borrowed
@@ -251,11 +251,11 @@ class LibraryBookReturn(Resource):
         """Returns a library book resource, changing is_availabe to true.
 
         Endpoint
-        ----------
+        --------
         POST api/libraries/<lib_id>/books/<book_id>/return
 
-        Status Codes
-        ----------
+        Responses
+        ---------
         404 : Library book not found
             {"message": "That library book does not exist"}
         400 : Already returned

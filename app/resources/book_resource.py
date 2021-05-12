@@ -10,11 +10,11 @@ class BookCollection(Resource):
         """Retrieves a collection of books.
 
         Endpoint
-        ----------
+        --------
         GET api/books
 
-        Status Codes
-        ----------
+        Responses
+        ---------
         200 : Success
             {
                 "status": "success",
@@ -34,18 +34,18 @@ class BookCollection(Resource):
         """Adds a new resource to the collection of books at a server defined uri.
 
         Endpoint
-        ----------
+        --------
         GET api/books
 
         Payload
-        ----------
+        -------
         {
             "author": str -> "Ta-Nehisi Coates",
             "title": str -> "Between the World and Me"
         }
 
-        Status Codes
-        ----------
+        Responses
+        ---------
         422 : Validation Error
             {"message": "Schema validation error"}
         201 : Created
@@ -81,16 +81,16 @@ class BookItem(Resource):
         """Retrieve a single resource from the collection of books.
 
         Endpoint
-        ----------
+        --------
         GET api/books/<book_id>
 
-        Path Parameters
+        Parameters
         ----------
         book_id : int, required
             The id for the book resource
 
-        Status Codes
-        ----------
+        Responses
+        ---------
         404 : Book not found
             {"message": "That book does not exist"}
         200 : Success
@@ -114,23 +114,23 @@ class BookItem(Resource):
         """Retrieve a single resource from the collection of books.
 
         Endpoint
-        ----------
+        --------
         GET api/books/<book_id>
 
-        Path Parameters
+        Parameters
         ----------
         book_id : int, required
             The id for the book resource
 
         Payload
-        ----------
+        -------
         {
             "author": str -> "Ta-Nehisi Coates",
             "title": str -> "Between the World and Me"
         }
 
-        Status Codes
-        ----------
+        Responses
+        ---------
         404 : Book not found
             {"message": "That book does not exist"}
         200 : Success
