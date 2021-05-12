@@ -4,6 +4,9 @@ from tests.populate_db import populate
 
 
 def create_local_app():
+    """Uses the application factory function to create a location version of
+    the Flask app and populate a local db with sample data for manual testing
+    """
     app = create_app()
 
     with app.app_context():
@@ -12,6 +15,7 @@ def create_local_app():
         populate()  # populates a local db with test data
 
     return app
+
 
 if __name__ == "__main__":
     app = create_local_app()

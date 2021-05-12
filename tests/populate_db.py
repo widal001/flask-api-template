@@ -1,8 +1,9 @@
 from app.models import db, Library, Book, LibraryBook
 from tests.data import BOOKS, LIBRARIES, LIBRARY_BOOKS
 
-def populate():
 
+def populate():
+    """Populates the database with sample data"""
     # create the library and book records
     libraries = {name: Library(**data) for name, data in LIBRARIES.items()}
     books = {name: Book(**data) for name, data in BOOKS.items()}

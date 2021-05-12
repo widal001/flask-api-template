@@ -24,10 +24,8 @@ api.add_resource(LibraryCollection, "/libraries")
 api.add_resource(LibraryBookCollection, "/libraries/<int:lib_id>/books")
 api.add_resource(LibraryBookItem, "/libraries/<int:lib_id>/books/<int:book_id>")
 api.add_resource(
-    LibraryBookBorrow,
-    "/libraries/<int:lib_id>/books/<int:book_id>/borrow"
+    LibraryBookBorrow, "/libraries/<int:lib_id>/books/<int:book_id>/borrow"
 )
 api.add_resource(
-    LibraryBookReturn,
-    "/libraries/<int:lib_id>/books/<int:book_id>/return"
+    LibraryBookReturn, "/libraries/<int:lib_id>/books/<int:book_id>/return"
 )

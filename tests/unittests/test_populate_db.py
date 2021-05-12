@@ -3,7 +3,14 @@ from tests.data import BOOKS, LIBRARIES
 
 
 def test_populate(client):
+    """Tests the creation of a test database with the use of the client fixture
 
+    Assertions
+    ----------
+    Attributes
+        The records created in populate_db() exist and their attributes match
+        what is specified in the data files
+    """
     # setup
     exp_book = BOOKS["world and me"]
     exp_library = LIBRARIES["central"]

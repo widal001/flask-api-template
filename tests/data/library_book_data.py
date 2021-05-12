@@ -26,5 +26,5 @@ LIBRARY_BOOKS_API = {}
 for branch, books in LIBRARY_BOOKS.items():
     LIBRARY_BOOKS_API[branch] = {
         **LIBRARIES[branch],
-        "books": [{**v, "book": BOOKS[k]} for k, v in books.items()]
+        "books": [{**v, "book": BOOKS[k]} for k, v in books.items()],
     }

@@ -6,16 +6,16 @@ UPDATE_FIELDS = ["title", "author"]
 class Book(db.Model):
     __tablename__ = "book"
 
-    #table columns
+    # table columns
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     author = db.Column(db.String, nullable=False)
 
-    #relationships
+    # relationships
     libraries = db.relationship(
         "LibraryBook",
         back_populates="book",
-        cascade="all, delete, delete-orphan"
+        cascade="all, delete, delete-orphan",
     )
 
     # for more info on why we use setattr() read this:

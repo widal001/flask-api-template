@@ -6,14 +6,54 @@ from app.schemas import LibrarySchema, LibraryBookSchema
 
 
 class LibraryCollection(Resource):
-
     def get(self):
+        """Retrieves a collection of library resources.
+
+        Endpoint
+        --------
+        GET api/libraries
+
+        Responses
+        ---------
+        200 : Success
+            {
+                "status": "success",
+                "data": [{
+                    "id": int -> 123,
+                    "name": str -> "Enoch Pratt Central Branch"
+                }]
+            }
+        """
         schema = LibrarySchema(many=True, exclude=["books"])
         libraries = Library.query.all()
         result = schema.dump(libraries)
         return {"status": "success", "data": result}, 200
 
     def post(self):
+        """Adds a new resource to the collection of libraries at a server
+        defined URI.
+
+        Endpoint
+        --------
+        POST api/libraries
+
+        Payload
+        -------
+        {"name": str, required -> "Enoch Pratt Central Branch"}
+
+        Responses
+        ---------
+        422 : Validation Error
+            {"message": "Schema validation error"}
+        201 : Created
+            {
+                "status": "created",
+                "data": {
+                    "id": int -> 123,
+                    "name": str -> "Enoch Pratt Central Branch"
+                }
+            }
+        """
         schema = LibrarySchema(exclude=["books"])
 
         # parse the payload data
@@ -29,12 +69,44 @@ class LibraryCollection(Resource):
         db.session.commit()
 
         result = schema.dump(library)
-        return {"status": "success", "data": result}, 201
+        return {"status": "created", "data": result}, 201
 
 
 class LibraryBookCollection(Resource):
-
     def get(self, lib_id):
+        """Returns the library book collection for a given library resource.
+
+        Endpoint
+        ----------
+        GET api/libraries/<lib_id>/books
+
+        Parameters
+        ----------
+        lib_id : int, required
+            The id for the library resource
+
+        Responses
+        ---------
+        404 : Library not found
+            {"message": "That library does not exist"}
+        200 : Success
+            {
+                "status": "success",
+                "data": {
+                    "id": int -> 123,
+                    "name": str -> "Enoch Pratt Central Branch",
+                    "books": [{
+                        "id": str -> 111,
+                        "is_available": bool -> true,
+                        "book": {
+                            "id": int -> 123,
+                            "author": str -> "Ta-Nehisi Coates",
+                            "title": str -> "Between the World and Me"
+                        }
+                    }]
+                }
+            }
+        """
         schema = LibrarySchema()
         library = Library.query.get(lib_id)
         if not library:
@@ -42,9 +114,50 @@ class LibraryBookCollection(Resource):
         result = schema.dump(library)
         return {"status": "success", "data": result}, 200
 
-class LibraryBookItem(Resource):
 
+class LibraryBookItem(Resource):
     def put(self, lib_id, book_id):
+        """Replaces or creates a library book resource at a client defined URI.
+
+        Endpoint
+        --------
+        PUT api/libraries/<lib_id>/books/<book_id>
+
+        Parameters
+        ----------
+        lib_id : int, required
+            The id for the parent library resource
+        book_id : int, required
+            The id for the parent book resource
+
+        Payload
+        -------
+        {"is_available": bool -> true}
+
+        Responses
+        ---------
+        404 : Library not found
+            {"message": "That library does not exist"}
+        404 : Book not found
+            {"message": "That book does not exist"}
+        200 : Success
+            {
+                "status": "success",
+                "data": {
+                    "library": {
+                        "id": int -> 123,
+                        "name": str -> "Enoch Pratt Central Branch",
+                    },
+                    "book": {
+                        "id": int -> 123,
+                        "author": str -> "Ta-Nehisi Coates",
+                        "title": str -> "Between the World and Me"
+                    },
+                    "id": int -> 111,
+                    "is_available": bool -> true
+                }
+            }
+        """
         schema = LibraryBookSchema()
 
         # find the corresponding book and library
@@ -71,16 +184,52 @@ class LibraryBookItem(Resource):
 
         # dump the result
         result = schema.dump(lib_book)
-        return {"status": "success", "data": result}, 201
+        return {"status": "success", "data": result}, 200
 
 
 class LibraryBookBorrow(Resource):
-
     def post(self, lib_id, book_id):
+        """Checks out a library book resource, changing is_availabe to false.
+
+        Endpoint
+        --------
+        POST api/libraries/<lib_id>/books/<book_id>/borrow
+
+        Parameters
+        ----------
+        lib_id : int, required
+            The id for the parent library resource
+        book_id : int, required
+            The id for the parent book resource
+
+        Responses
+        ---------
+        404 : Library book not found
+            {"message": "That library book does not exist"}
+        400 : Already borrowed
+            {"message": "That book has already been borrowed"}
+        200 : Success
+            {
+                "status": "success",
+                "data": {
+                    "library": {
+                        "id": int -> 123,
+                        "name": str -> "Enoch Pratt Central Branch",
+                    },
+                    "book": {
+                        "id": int -> 123,
+                        "author": str -> "Ta-Nehisi Coates",
+                        "title": str -> "Between the World and Me"
+                    },
+                    "id": int -> 111,
+                    "is_available": bool -> false
+                }
+            }
+        """
         schema = LibraryBookSchema()
 
         # locate the library book
-        q = LibraryBook.query.filter_by(library_id=lib_id,book_id=book_id)
+        q = LibraryBook.query.filter_by(library_id=lib_id, book_id=book_id)
         lib_book = q.first()
 
         # check that it exists and is still avaialable
@@ -98,12 +247,41 @@ class LibraryBookBorrow(Resource):
 
 
 class LibraryBookReturn(Resource):
-
     def post(self, lib_id, book_id):
+        """Returns a library book resource, changing is_availabe to true.
+
+        Endpoint
+        --------
+        POST api/libraries/<lib_id>/books/<book_id>/return
+
+        Responses
+        ---------
+        404 : Library book not found
+            {"message": "That library book does not exist"}
+        400 : Already returned
+            {"message": "That book has already been returned"}
+        200 : Success
+            {
+                "status": "success",
+                "data": {
+                    "library": {
+                        "id": int -> 123,
+                        "name": str -> "Enoch Pratt Central Branch",
+                    },
+                    "book": {
+                        "id": int -> 123,
+                        "author": str -> "Ta-Nehisi Coates",
+                        "title": str -> "Between the World and Me"
+                    },
+                    "id": int -> 111,
+                    "is_available": bool -> true
+                }
+            }
+        """
         schema = LibraryBookSchema()
 
         # locate the library book
-        q = LibraryBook.query.filter_by(library_id=lib_id,book_id=book_id)
+        q = LibraryBook.query.filter_by(library_id=lib_id, book_id=book_id)
         lib_book = q.first()
 
         # check that it exists and is still avaialable

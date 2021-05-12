@@ -13,6 +13,7 @@ MarkupSafe==1.1.1
 marshmallow==3.11.1
 packaging==20.9
 pluggy==0.13.1
+pre-commit==2.12.1
 psycopg2-binary==2.8.6
 py==1.10.0
 pyparsing==2.4.7
