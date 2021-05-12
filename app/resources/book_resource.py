@@ -7,12 +7,57 @@ from app.schemas import BookSchema
 
 class BookCollection(Resource):
     def get(self):
+        """Retrieves a collection of books.
+
+        Endpoint
+        ----------
+        GET api/books
+
+        Status Codes
+        ----------
+        200 : Success
+            {
+                "status": "success",
+                "data": [{
+                    "id": int -> 123,
+                    "author": str -> "Ta-Nehisi Coates",
+                    "title": str -> "Between the World and Me"
+                }]
+            }
+        """
         schema = BookSchema(many=True)
         books = Book.query.all()
         result = schema.dump(books)
         return {"status": "success", "data": result}, 200
 
     def post(self):
+        """Adds a new resource to the collection of books at a server defined uri.
+
+        Endpoint
+        ----------
+        GET api/books
+
+        Payload
+        ----------
+        {
+            "author": str -> "Ta-Nehisi Coates",
+            "title": str -> "Between the World and Me"
+        }
+
+        Status Codes
+        ----------
+        422 : Validation Error
+            {"message": "Schema validation error"}
+        201 : Created
+            {
+                "status": "created",
+                "data": {
+                    "id": int -> 123,
+                    "author": str -> "Ta-Nehisi Coates",
+                    "title": str -> "Between the World and Me"
+                }
+            }
+        """
         schema = BookSchema()
 
         # parse the payload data
@@ -28,11 +73,36 @@ class BookCollection(Resource):
         db.session.commit()
 
         result = schema.dump(book)
-        return {"status": "success", "data": result}, 201
+        return {"status": "created", "data": result}, 201
 
 
 class BookItem(Resource):
     def get(self, book_id):
+        """Retrieve a single resource from the collection of books.
+
+        Endpoint
+        ----------
+        GET api/books/<book_id>
+
+        Path Parameters
+        ----------
+        book_id : int, required
+            The id for the book resource
+
+        Status Codes
+        ----------
+        404 : Book not found
+            {"message": "That book does not exist"}
+        200 : Success
+            {
+                "status": "success",
+                "data": {
+                    "id": int -> 123,
+                    "author": str -> "Ta-Nehisi Coates",
+                    "title": str -> "Between the World and Me"
+                }
+            }
+        """
         schema = BookSchema()
         book = Book.query.get(book_id)
         if not book:
@@ -41,6 +111,38 @@ class BookItem(Resource):
         return {"status": "success", "data": result}, 200
 
     def put(self, book_id):
+        """Retrieve a single resource from the collection of books.
+
+        Endpoint
+        ----------
+        GET api/books/<book_id>
+
+        Path Parameters
+        ----------
+        book_id : int, required
+            The id for the book resource
+
+        Payload
+        ----------
+        {
+            "author": str -> "Ta-Nehisi Coates",
+            "title": str -> "Between the World and Me"
+        }
+
+        Status Codes
+        ----------
+        404 : Book not found
+            {"message": "That book does not exist"}
+        200 : Success
+            {
+                "status": "success",
+                "data": {
+                    "id": int -> 123,
+                    "author": str -> "Ta-Nehisi Coates",
+                    "title": str -> "Between the World and Me"
+                }
+            }
+        """
         schema = BookSchema()
 
         # locate the record to update

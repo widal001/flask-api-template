@@ -42,7 +42,7 @@ class LibraryCollection(Resource):
         {"name": str, required -> "Enoch Pratt Central Branch"}
 
         Status Codes
-        ------
+        ----------
         422 : Validation Error
             {"message": "Schema validation error"}
         201 : Created
@@ -80,8 +80,13 @@ class LibraryBookCollection(Resource):
         ----------
         GET api/libraries/<lib_id>/books
 
+        Path Parameters
+        ----------
+        lib_id : int, required
+            The id for the library resource
+
         Status Codes
-        ------
+        ----------
         404 : Library not found
             {"message": "That library does not exist"}
         200 : Success
@@ -118,13 +123,19 @@ class LibraryBookItem(Resource):
         ----------
         PUT api/libraries/<lib_id>/books/<book_id>
 
+        Path Parameters
+        ----------
+        lib_id : int, required
+            The id for the parent library resource
+        book_id : int, required
+            The id for the parent book resource
+
         Payload
         ----------
         {"is_available": bool -> true}
 
-
         Status Codes
-        ------
+        ----------
         404 : Library not found
             {"message": "That library does not exist"}
         404 : Book not found
@@ -184,8 +195,15 @@ class LibraryBookBorrow(Resource):
         ----------
         POST api/libraries/<lib_id>/books/<book_id>/borrow
 
+        Path Parameters
+        ----------
+        lib_id : int, required
+            The id for the parent library resource
+        book_id : int, required
+            The id for the parent book resource
+
         Status Codes
-        ------
+        ----------
         404 : Library book not found
             {"message": "That library book does not exist"}
         400 : Already borrowed
@@ -237,7 +255,7 @@ class LibraryBookReturn(Resource):
         POST api/libraries/<lib_id>/books/<book_id>/return
 
         Status Codes
-        ------
+        ----------
         404 : Library book not found
             {"message": "That library book does not exist"}
         400 : Already returned
