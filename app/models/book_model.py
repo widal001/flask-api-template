@@ -13,7 +13,9 @@ class Book(db.Model):
 
     # relationships
     libraries = db.relationship(
-        "LibraryBook", back_populates="book", cascade="all, delete, delete-orphan"
+        "LibraryBook",
+        back_populates="book",
+        cascade="all, delete, delete-orphan",
     )
 
     # for more info on why we use setattr() read this:

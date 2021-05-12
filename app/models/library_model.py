@@ -10,5 +10,7 @@ class Library(db.Model):
 
     # relationships
     books = db.relationship(
-        "LibraryBook", back_populates="library", cascade="all, delete, delete-orphan"
+        "LibraryBook",
+        back_populates="library",
+        cascade="all, delete, delete-orphan",
     )
