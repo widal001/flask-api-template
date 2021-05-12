@@ -8,7 +8,15 @@ from tests.populate_db import populate
 
 
 @pytest.fixture(scope="function")
-def client(request):
+def client():
+    """Exposes a test client for the app with a temporary database that can be
+    used for unit testing
+
+    Notes
+    -----
+    In order for a unit test to have access to this test client, the fixture
+    must be listed as a parameter in the test definition
+    """
     app = create_app()
     app.config["DEBUG"] = True
 

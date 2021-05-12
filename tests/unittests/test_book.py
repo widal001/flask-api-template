@@ -7,6 +7,15 @@ from tests.data import BOOKS
 
 class TestBookCollection:
     def test_get(self, client):
+        """Tests the GET api/books endpoint
+
+        Assertions
+        ----------
+        Status Code
+            The response status code is 200
+        Response Body
+            The response body matches the expected format
+        """
         # setup
         expected = list(BOOKS.values())
 
@@ -26,12 +35,24 @@ class TestBookCollection:
         assert data == expected
 
     def test_post(self, client):
+        """Tests the POST api/books endpoint
+
+        Assertions
+        ----------
+        Status Code
+            The response status code is 201
+        Response Body
+            The response body matches the expected format
+        Collection Size
+            The number of items in the book collection has increased by one
+        """
         # setup
         expected = {
             "id": 1,
             "title": "Another Country",
             "author": "James Baldwin",
         }
+        assert len(Book.query.all()) == 4
 
         # execution
         response = client.post("/api/books", data=json.dumps(expected))
@@ -47,10 +68,20 @@ class TestBookCollection:
         # validation
         assert response.status_code == 201
         assert data == expected
+        assert len(Book.query.all()) == 5
 
 
 class TestBookItem:
     def test_get(self, client):
+        """Tests the GET api/books/<books_id> endpoint
+
+        Assertions
+        ----------
+        Status Code
+            The response status code is 200
+        Response Body
+            The response body matches the expected format
+        """
         # setup
         expected = BOOKS["world and me"]
 
@@ -70,6 +101,17 @@ class TestBookItem:
         assert data == expected
 
     def test_put(self, client):
+        """Tests the PUT api/books/<books_id> endpoint
+
+        Assertions
+        ----------
+        Status Code
+            The response status code is 200
+        Response Body
+            The response body matches the expected format
+        Attributes
+            The values of the attributes match those set in the payload
+        """
         # setup
         new_val = "Between the World and Me (Revised)"
         expected = BOOKS["world and me"].copy()
